@@ -1,4 +1,4 @@
-//programado por Diego Alejandro Carodozo Rojas
+//programado por Diego Alejandro Carodozo Rojas para el taller de STL
 
 #include <iostream>
 #include <vector>
@@ -97,7 +97,7 @@ void lista()
         listaFinal->push_front(1 + rand() % 100);
     }
 
-    std::cout << "Impresion en orden del deque" << std::endl;
+    std::cout << "Impresion en orden del la lista" << std::endl;
     for (std::list<int>::iterator it = listaFinal->begin(); it != listaFinal->end(); ++it)
     {
         std::cout << *it << " ";
@@ -105,26 +105,35 @@ void lista()
     std::cout << std::endl
               << std::endl;
 
-    std::cout << "Impresion invertida del deque" << std::endl;
-    for (std::list<int>::iterator it = listaFinal->end() - 1; it != listaFinal->begin() - 1; --it)
+    std::cout << "Impresion invertida del la lista" << std::endl;
+    for (std::list<int>::reverse_iterator itr = listaFinal->rbegin(); itr != listaFinal->rend(); ++itr)
     {
-        std::cout << *it << " ";
+        std::cout << *itr << " ";
     }
     std::cout << std::endl;
 
-    listaFinal->erase(listaFinal->begin()+4);
-    listaFinal->erase(listaFinal->begin()+8);
-    listaFinal->insert();
+    std::cout << std::endl;
+    std::list<int>::iterator it = listaFinal->begin();
+    std::advance(it,4);
+    listaFinal->erase(it);
+    it = listaFinal->begin();
+    std::advance(it,8);
+    listaFinal->erase(it);
+    it = listaFinal->begin();
+    std::advance(it,15);
+    listaFinal->insert(it,1 + rand() % 100 );
 
     std::cout << std::endl;
 
-    std::cout << "Impresion despues de los cambios en el deque" << std::endl;
+    std::cout << "Impresion despues de los cambios en la lista" << std::endl;
     for (std::list<int>::iterator it = listaFinal->begin(); it != listaFinal->end(); ++it)
     {
         std::cout << *it << " ";
     }
     std::cout << std::endl;
     std::cout << "---------------------------------------------------------------------------------------" << std::endl;
+
+    
 }
 
 int main(int argc, char *argv[])
@@ -132,4 +141,5 @@ int main(int argc, char *argv[])
 
     vector();
     deque();
+    lista();
 }
