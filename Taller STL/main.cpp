@@ -4,6 +4,7 @@
 #include <vector>
 #include <deque>
 #include <ctime>
+#include <list>
 
 void vector()
 {
@@ -12,7 +13,7 @@ void vector()
 
     for (int i = 0; i < 25; i++)
     {
-        vectorFinal->push_back(1 + rand() % 10);
+        vectorFinal->push_back(1 + rand() % 100);
     }
 
     std::cout << "Impresion en orden del vector" << std::endl;
@@ -21,7 +22,8 @@ void vector()
 
         std::cout << *it << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl
+              << std::endl;
 
     std::cout << "Impresion invertida del vector" << std::endl;
     for (std::vector<int>::iterator it = vectorFinal->end() - 1; it != vectorFinal->begin() - 1; --it)
@@ -30,24 +32,9 @@ void vector()
     }
     std::cout << std::endl;
 
-    for (std::vector<int>::iterator it = vectorFinal->begin(); it != vectorFinal->end(); ++it)
-    {
-        auto posicion = it - vectorFinal->begin();
-
-        if (posicion == 5 - 1)
-        {
-            vectorFinal->erase(it);
-        }
-        if (posicion == (10 - 2))
-        {
-            vectorFinal->erase(it);
-        }
-        if (posicion == (18 - 3))
-        {
-            vectorFinal->insert(it, 1 + rand() % 10);
-        }
-        std::cout << *it << " ";
-    }
+    vectorFinal->erase(vectorFinal->begin()+4);
+    vectorFinal->erase(vectorFinal->begin()+8);
+    vectorFinal->insert(vectorFinal->begin() + 15, 1 + rand() % 100);
 
     std::cout << std::endl;
 
@@ -57,16 +44,92 @@ void vector()
         std::cout << *it << " ";
     }
     std::cout << std::endl;
-    std::cout << "---------------------------------------------------------" << std::endl;
+    std::cout << "---------------------------------------------------------------------------------------" << std::endl;
 }
 
 void deque()
 {
     std::deque<int> dequeFinal[30];
+
+    for (int i = 0; i < 15; i++)
+    {
+        dequeFinal->push_back(1 + rand() % 100);
+        dequeFinal->push_front(1 + rand() % 100);
+    }
+
+    std::cout << "Impresion en orden del deque" << std::endl;
+    for (std::deque<int>::iterator it = dequeFinal->begin(); it != dequeFinal->end(); ++it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl
+              << std::endl;
+
+    std::cout << "Impresion invertida del deque" << std::endl;
+    for (std::deque<int>::iterator it = dequeFinal->end() - 1; it != dequeFinal->begin() - 1; --it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
+    dequeFinal->erase(dequeFinal->begin()+4);
+    dequeFinal->erase(dequeFinal->begin()+8);
+    dequeFinal->insert(dequeFinal->begin() + 15, 1 + rand() % 100);
+
+    std::cout << std::endl;
+
+    std::cout << "Impresion despues de los cambios en el deque" << std::endl;
+    for (std::deque<int>::iterator it = dequeFinal->begin(); it != dequeFinal->end(); ++it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "---------------------------------------------------------------------------------------" << std::endl;
+}
+
+void lista()
+{
+    std::list<int> listaFinal[30];
+
+    for (int i = 0; i < 15; i++)
+    {
+        listaFinal->push_back(1 + rand() % 100);
+        listaFinal->push_front(1 + rand() % 100);
+    }
+
+    std::cout << "Impresion en orden del deque" << std::endl;
+    for (std::list<int>::iterator it = listaFinal->begin(); it != listaFinal->end(); ++it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl
+              << std::endl;
+
+    std::cout << "Impresion invertida del deque" << std::endl;
+    for (std::list<int>::iterator it = listaFinal->end() - 1; it != listaFinal->begin() - 1; --it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
+    listaFinal->erase(listaFinal->begin()+4);
+    listaFinal->erase(listaFinal->begin()+8);
+    listaFinal->insert();
+
+    std::cout << std::endl;
+
+    std::cout << "Impresion despues de los cambios en el deque" << std::endl;
+    for (std::list<int>::iterator it = listaFinal->begin(); it != listaFinal->end(); ++it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "---------------------------------------------------------------------------------------" << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
 
     vector();
+    deque();
 }
