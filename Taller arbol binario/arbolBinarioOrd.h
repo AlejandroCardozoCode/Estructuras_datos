@@ -2,6 +2,7 @@
 #define __ARBOLBINARIOORD_H__
 
 #include "NodoBinario.h"
+#include <iostream>
 
 template< class T >
 class ArbolBinarioOrd {

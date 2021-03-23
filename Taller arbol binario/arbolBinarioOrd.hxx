@@ -29,7 +29,6 @@ T ArbolBinarioOrd<T>::datoRaiz()
   return (this->raiz)->obtenerDato();
 }
 
-// recurrente
 template <class T>
 int ArbolBinarioOrd<T>::altura()
 {
@@ -39,13 +38,12 @@ int ArbolBinarioOrd<T>::altura()
     return (this->raiz)->altura();
 }
 
-// recurrente
 template <class T>
 int ArbolBinarioOrd<T>::tamano()
 {
 }
 
-// iterativa
+
 template <class T>
 bool ArbolBinarioOrd<T>::insertar(T val)
 {
@@ -91,13 +89,13 @@ bool ArbolBinarioOrd<T>::insertar(T val)
   return insertado;
 }
 
-// iterativa
 template <class T>
 bool ArbolBinarioOrd<T>::eliminar(T val)
 {
 
   NodoBinario<T> *nodo = this->raiz;
   NodoBinario<T> *padre = this->raiz;
+  NodoBinario<T> * aux, *auxPadre;
   bool encontrado = false;
 
   while (nodo != NULL)
@@ -120,8 +118,6 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
   }
   if (encontrado && nodo->obtenerHijoDer() == NULL && nodo->obtenerHijoIzq() == NULL)
   {
-    std::cout << "se encontro el dato" << std::endl;
-    std::cout << "el valor del padre es: " << padre->obtenerDato() << std::endl;
     if (val < padre->obtenerDato())
     {
       padre->fijarHijoIzq(NULL);
@@ -171,20 +167,24 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
         return true;
       }
     }
+  }
 
-    // comparar con dato en nodo para bajar por izquierda o derecha
-    // y para saber si val esta en el arbol
-
-    // si val esta en el arbol
-    // verificar situacion de eliminacion:
-    // 1. nodo hoja, borrarlo
-    // 2. nodo con un solo hijo, usar hijo para reemplazar nodo
-    // 3. nodo con dos hijos, usar maximo del subarbol izquierdo
-    //    para reemplazar nodo
+  if (encontrado && (nodo->obtenerHijoDer() != NULL && nodo->obtenerHijoIzq() != NULL))
+  {
+    aux = nodo->obtenerHijoIzq();
+    while (aux->esHoja() == false)
+    {
+      auxPadre = aux;
+      aux = aux->obtenerHijoDer();
+    }
+    nodo->fijarDato(aux->obtenerDato());
+    auxPadre->fijarHijoDer(NULL);
+    delete aux;
+    return true;
   }
 }
 
-// iterativa
+
 template <class T>
 bool ArbolBinarioOrd<T>::buscar(T val)
 {
@@ -210,13 +210,11 @@ bool ArbolBinarioOrd<T>::buscar(T val)
   return encontrado;
 }
 
-// recurrente
 template <class T>
 void ArbolBinarioOrd<T>::preOrden()
 {
 }
 
-// recurrente
 template <class T>
 void ArbolBinarioOrd<T>::inOrden()
 {
@@ -224,13 +222,11 @@ void ArbolBinarioOrd<T>::inOrden()
     (this->raiz)->inOrden();
 }
 
-// recurrente
 template <class T>
 void ArbolBinarioOrd<T>::posOrden()
 {
 }
 
-// iterativa
 template <class T>
 void ArbolBinarioOrd<T>::nivelOrden()
 {
