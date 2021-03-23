@@ -72,7 +72,6 @@ bool ArbolBinarioOrd<T>::insertar(T val)
     }
   }
 
-
   if (!duplicado)
   {
     NodoBinario<T> *nuevo = new NodoBinario<T>(val);
@@ -87,7 +86,6 @@ bool ArbolBinarioOrd<T>::insertar(T val)
       padre->fijarHijoIzq(nuevo);
     else
       padre->fijarHijoDer(nuevo);
-      
   }
   insertado = true;
   return insertado;
@@ -98,15 +96,92 @@ template <class T>
 bool ArbolBinarioOrd<T>::eliminar(T val)
 {
 
-  // comparar con dato en nodo para bajar por izquierda o derecha
-  // y para saber si val esta en el arbol
+  NodoBinario<T> *nodo = this->raiz;
+  NodoBinario<T> *padre = this->raiz;
+  bool encontrado = false;
 
-  // si val esta en el arbol
-  // verificar situacion de eliminacion:
-  // 1. nodo hoja, borrarlo
-  // 2. nodo con un solo hijo, usar hijo para reemplazar nodo
-  // 3. nodo con dos hijos, usar maximo del subarbol izquierdo
-  //    para reemplazar nodo
+  while (nodo != NULL)
+  {
+    if (val < nodo->obtenerDato())
+    {
+      padre = nodo;
+      nodo = nodo->obtenerHijoIzq();
+    }
+    else if (val > nodo->obtenerDato())
+    {
+      padre = nodo;
+      nodo = nodo->obtenerHijoDer();
+    }
+    else
+    {
+      encontrado = true;
+      break;
+    }
+  }
+  if (encontrado && nodo->obtenerHijoDer() == NULL && nodo->obtenerHijoIzq() == NULL)
+  {
+    std::cout << "se encontro el dato" << std::endl;
+    std::cout << "el valor del padre es: " << padre->obtenerDato() << std::endl;
+    if (val < padre->obtenerDato())
+    {
+      padre->fijarHijoIzq(NULL);
+      delete nodo;
+    }
+    if (val > padre->obtenerDato())
+    {
+      padre->fijarHijoDer(NULL);
+      delete nodo;
+    }
+  }
+
+  if (encontrado && (nodo->obtenerHijoDer() == NULL ^ nodo->obtenerHijoIzq() == NULL))
+  {
+    if (nodo->obtenerHijoIzq() == NULL)
+    {
+      if (val < padre->obtenerDato())
+      {
+        padre->fijarHijoIzq(nodo->obtenerHijoDer());
+        nodo->fijarHijoIzq(NULL);
+        delete nodo;
+        return true;
+      }
+      if (val > padre->obtenerDato())
+      {
+        padre->fijarHijoDer(nodo->obtenerHijoDer());
+        nodo->fijarHijoDer(NULL);
+        delete nodo;
+        return true;
+      }
+    }
+
+    if (nodo->obtenerHijoDer() == NULL)
+    {
+      if (val < padre->obtenerDato())
+      {
+        padre->fijarHijoIzq(nodo->obtenerHijoIzq());
+        nodo->fijarHijoIzq(NULL);
+        delete nodo;
+        return true;
+      }
+      if (val > padre->obtenerDato())
+      {
+        padre->fijarHijoDer(nodo->obtenerHijoIzq());
+        nodo->fijarHijoDer(NULL);
+        delete nodo;
+        return true;
+      }
+    }
+
+    // comparar con dato en nodo para bajar por izquierda o derecha
+    // y para saber si val esta en el arbol
+
+    // si val esta en el arbol
+    // verificar situacion de eliminacion:
+    // 1. nodo hoja, borrarlo
+    // 2. nodo con un solo hijo, usar hijo para reemplazar nodo
+    // 3. nodo con dos hijos, usar maximo del subarbol izquierdo
+    //    para reemplazar nodo
+  }
 }
 
 // iterativa
@@ -178,22 +253,23 @@ void ArbolBinarioOrd<T>::nivelOrden()
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::imprimirArbol(std::string inicio, NodoBinario<T>* node, bool derecho)
+void ArbolBinarioOrd<T>::imprimirArbol(std::string inicio, NodoBinario<T> *node, bool derecho)
 {
-  if( node != NULL )
-    {
-        std::cout << inicio;
-        std::cout << (derecho ? "├──" : "└──" );
-        std::cout << node->obtenerDato() << std::endl;
+  if (node != NULL)
+  {
+    std::cout << inicio;
+    std::cout << (derecho ? "\\__ " : "\\__ ");
+    std::cout << node->obtenerDato() << std::endl;
 
-        imprimirArbol( inicio + (derecho ? "│   " : "    "), node->obtenerHijoDer(), true);
-        imprimirArbol( inicio + (derecho ? "│   " : "    "), node->obtenerHijoIzq(), false);
-    }
+    imprimirArbol(inicio + (derecho ? "│   " : "    "), node->obtenerHijoDer(), true);
+    imprimirArbol(inicio + (derecho ? "│   " : "    "), node->obtenerHijoIzq(), false);
+  }
 }
 
 template <class T>
 void ArbolBinarioOrd<T>::imprimirArbol()
 {
-  NodoBinario<T> * raiz = this->raiz;
-  imprimirArbol("", raiz, false);    
+  std::cout << "<------------------Impresion del Arbol------------------>" << std::endl;
+  NodoBinario<T> *raiz = this->raiz;
+  imprimirArbol("", raiz, false);
 }
