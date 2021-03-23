@@ -1,6 +1,4 @@
 #include "NodoBinario.h"
-#include <cstddef>
-#include <iostream>
 
 template< class T >
 NodoBinario<T>::NodoBinario() {

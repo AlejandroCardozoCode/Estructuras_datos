@@ -1,7 +1,6 @@
 #ifndef __NODOBINARIO_H__
 #define __NODOBINARIO_H__
 
-
 template< class T >
 class NodoBinario {
   protected:
@@ -23,4 +22,6 @@ class NodoBinario {
     void inOrden();
 };
 
-#endif // __NODOBINARIO_H__
+#include "NodoBinario.hxx"
+
+#endif

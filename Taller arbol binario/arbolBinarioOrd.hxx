@@ -1,7 +1,5 @@
 #include "ArbolBinarioOrd.h"
-#include "queue"
-#include "iostream"
-#include <cstddef>
+#include <queue>
 
 template< class T >
 ArbolBinarioOrd<T>::ArbolBinarioOrd() {
@@ -38,7 +36,7 @@ int ArbolBinarioOrd<T>::altura() {
 // recurrente
 template< class T >
 int ArbolBinarioOrd<T>::tamano() {
- return 0;
+
 }
 
 // iterativa
@@ -88,7 +86,7 @@ bool ArbolBinarioOrd<T>::eliminar(T val) {
 // 2. nodo con un solo hijo, usar hijo para reemplazar nodo
 // 3. nodo con dos hijos, usar maximo del subarbol izquierdo
 //    para reemplazar nodo
-return false;
+
 }
 
 // iterativa
