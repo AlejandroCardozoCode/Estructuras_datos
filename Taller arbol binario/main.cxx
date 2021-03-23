@@ -1,5 +1,11 @@
 #include <iostream>
+#include "ArbolBinarioOrd.h"
+#include "nodoBinario.h"
 
 int main() {
-  std::cout << "Hello World!\n";
+  int dato;
+  std::cout << "dato:";
+  std::cin >> dato; 
+  ArbolBinarioOrd<int> nuevo ;
+  return 0;
 }

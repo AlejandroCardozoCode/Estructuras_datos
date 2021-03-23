@@ -1,13 +1,15 @@
 #include "ArbolBinarioOrd.h"
-#include <queue>
+#include "queue"
+#include "iostream"
+#include <cstddef>
 
 template< class T >
-ArbolBinarioOrd::ArbolBinarioOrd() {
+ArbolBinarioOrd<T>::ArbolBinarioOrd() {
   this->raiz = NULL;
 }
 
 template< class T >
-ArbolBinarioOrd::~ArbolBinarioOrd() {
+ArbolBinarioOrd<T>::~ArbolBinarioOrd() {
   if (this->raiz != NULL) {
     delete this->raiz;
     this->raiz = NULL;
@@ -15,18 +17,18 @@ ArbolBinarioOrd::~ArbolBinarioOrd() {
 }
 
 template< class T >
-bool ArbolBinarioOrd::esVacio() {
+bool ArbolBinarioOrd<T>::esVacio() {
   return this->raiz == NULL;
 }
 
 template< class T >
-T ArbolBinarioOrd::datoRaiz() {
+T ArbolBinarioOrd<T>::datoRaiz() {
   return (this->raiz)->obtenerDato();
 }
 
 // recurrente
 template< class T >
-int ArbolBinarioOrd::altura() {
+int ArbolBinarioOrd<T>::altura() {
   if (this->esVacio())
     return -1;
   else
@@ -35,13 +37,13 @@ int ArbolBinarioOrd::altura() {
 
 // recurrente
 template< class T >
-int ArbolBinarioOrd::tamano() {
-
+int ArbolBinarioOrd<T>::tamano() {
+ return 0;
 }
 
 // iterativa
 template< class T >
-bool ArbolBinarioOrd::insertar(T val) {
+bool ArbolBinarioOrd<T>::insertar(T val) {
   NodoBinario<T>* nodo = this->raiz;
   NodoBinario<T>* padre = this->raiz;
   bool insertado = false;
@@ -75,7 +77,7 @@ bool ArbolBinarioOrd::insertar(T val) {
 
 // iterativa
 template< class T >
-bool ArbolBinarioOrd::eliminar(T val) {
+bool ArbolBinarioOrd<T>::eliminar(T val) {
 
 // comparar con dato en nodo para bajar por izquierda o derecha
 // y para saber si val esta en el arbol
@@ -86,12 +88,12 @@ bool ArbolBinarioOrd::eliminar(T val) {
 // 2. nodo con un solo hijo, usar hijo para reemplazar nodo
 // 3. nodo con dos hijos, usar maximo del subarbol izquierdo
 //    para reemplazar nodo
-
+return false;
 }
 
 // iterativa
 template< class T >
-bool ArbolBinarioOrd::buscar(T val) {
+bool ArbolBinarioOrd<T>::buscar(T val) {
   NodoBinario<T>* nodo = this->raiz;
   bool encontrado = false;
 
@@ -110,26 +112,26 @@ bool ArbolBinarioOrd::buscar(T val) {
 
 // recurrente
 template< class T >
-void ArbolBinarioOrd::preOrden() {
+void ArbolBinarioOrd<T>::preOrden() {
 
 }
 
 // recurrente
 template< class T >
-void ArbolBinarioOrd::inOrden() {
+void ArbolBinarioOrd<T>::inOrden() {
   if (!this->esVacio())
     (this->raiz)->inOrden();
 }
 
 // recurrente
 template< class T >
-void ArbolBinarioOrd::posOrden() {
+void ArbolBinarioOrd<T>::posOrden() {
 
 }
 
 // iterativa
 template< class T >
-void ArbolBinarioOrd::nivelOrden() {
+void ArbolBinarioOrd<T>::nivelOrden() {
 	if (!this->esVacio()) {
     std::queue< NodoBinario<T>* > cola;
     cola.push(this->raiz);

@@ -1,7 +1,6 @@
 #ifndef __NODOBINARIO_H__
 #define __NODOBINARIO_H__
 
-#include "NodoBinario.hxx"
 
 template< class T >
 class NodoBinario {
@@ -23,4 +22,5 @@ class NodoBinario {
     int altura();
     void inOrden();
 };
+
 #endif // __NODOBINARIO_H__

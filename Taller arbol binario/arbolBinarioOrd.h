@@ -3,7 +3,6 @@
 
 #include "NodoBinario.h"
 
-
 template< class T >
 class ArbolBinarioOrd {
   protected:
@@ -23,7 +22,5 @@ class ArbolBinarioOrd {
     void posOrden();
     void nivelOrden();
 };
-
-#include "ArbolBinarioOrd.hxx"
 
 #endif // __ARBOLBINARIOORD_H__
