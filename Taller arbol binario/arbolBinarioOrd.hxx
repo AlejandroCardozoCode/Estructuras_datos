@@ -1,32 +1,38 @@
 #include "ArbolBinarioOrd.h"
 #include <queue>
 
-template< class T >
-ArbolBinarioOrd<T>::ArbolBinarioOrd() {
+template <class T>
+ArbolBinarioOrd<T>::ArbolBinarioOrd()
+{
   this->raiz = NULL;
 }
 
-template< class T >
-ArbolBinarioOrd<T>::~ArbolBinarioOrd() {
-  if (this->raiz != NULL) {
+template <class T>
+ArbolBinarioOrd<T>::~ArbolBinarioOrd()
+{
+  if (this->raiz != NULL)
+  {
     delete this->raiz;
     this->raiz = NULL;
   }
 }
 
-template< class T >
-bool ArbolBinarioOrd<T>::esVacio() {
+template <class T>
+bool ArbolBinarioOrd<T>::esVacio()
+{
   return this->raiz == NULL;
 }
 
-template< class T >
-T ArbolBinarioOrd<T>::datoRaiz() {
+template <class T>
+T ArbolBinarioOrd<T>::datoRaiz()
+{
   return (this->raiz)->obtenerDato();
 }
 
 // recurrente
-template< class T >
-int ArbolBinarioOrd<T>::altura() {
+template <class T>
+int ArbolBinarioOrd<T>::altura()
+{
   if (this->esVacio())
     return -1;
   else
@@ -34,73 +40,94 @@ int ArbolBinarioOrd<T>::altura() {
 }
 
 // recurrente
-template< class T >
-int ArbolBinarioOrd<T>::tamano() {
-
+template <class T>
+int ArbolBinarioOrd<T>::tamano()
+{
 }
 
 // iterativa
-template< class T >
-bool ArbolBinarioOrd<T>::insertar(T val) {
-  NodoBinario<T>* nodo = this->raiz;
-  NodoBinario<T>* padre = this->raiz;
+template <class T>
+bool ArbolBinarioOrd<T>::insertar(T val)
+{
+  NodoBinario<T> *nodo = this->raiz;
+  NodoBinario<T> *padre = this->raiz;
   bool insertado = false;
   bool duplicado = false;
-  
-  while (nodo != NULL) {
+
+  while (nodo != NULL)
+  {
     padre = nodo;
-    if (val < nodo->obtenerDato()) {
+    if (val < nodo->obtenerDato())
+    {
       nodo = nodo->obtenerHijoIzq();
-    } else if (val > nodo->obtenerDato()) {
+    }
+    else if (val > nodo->obtenerDato())
+    {
       nodo = nodo->obtenerHijoDer();
-    } else {
+    }
+    else
+    {
       duplicado = true;
       break;
     }
   }
 
-  if (!duplicado) {
-    NodoBinario<T>* nuevo = new NodoBinario<T>(val);
-    if (nuevo != NULL) {
-      if (val < padre->obtenerDato())
-        padre->fijarHijoIzq(nuevo);
-      else
-        padre->fijarHijoDer(nuevo);
-    }
-    insertado = true;
-  }
 
+  if (!duplicado)
+  {
+    NodoBinario<T> *nuevo = new NodoBinario<T>(val);
+    if (padre == NULL)
+    {
+      this->raiz = new NodoBinario<T>(val);
+      insertado = true;
+      return insertado;
+    }
+
+    if (val < padre->obtenerDato())
+      padre->fijarHijoIzq(nuevo);
+    else
+      padre->fijarHijoDer(nuevo);
+      
+  }
+  insertado = true;
   return insertado;
 }
 
 // iterativa
-template< class T >
-bool ArbolBinarioOrd<T>::eliminar(T val) {
+template <class T>
+bool ArbolBinarioOrd<T>::eliminar(T val)
+{
 
-// comparar con dato en nodo para bajar por izquierda o derecha
-// y para saber si val esta en el arbol
+  // comparar con dato en nodo para bajar por izquierda o derecha
+  // y para saber si val esta en el arbol
 
-// si val esta en el arbol
-// verificar situacion de eliminacion:
-// 1. nodo hoja, borrarlo
-// 2. nodo con un solo hijo, usar hijo para reemplazar nodo
-// 3. nodo con dos hijos, usar maximo del subarbol izquierdo
-//    para reemplazar nodo
-
+  // si val esta en el arbol
+  // verificar situacion de eliminacion:
+  // 1. nodo hoja, borrarlo
+  // 2. nodo con un solo hijo, usar hijo para reemplazar nodo
+  // 3. nodo con dos hijos, usar maximo del subarbol izquierdo
+  //    para reemplazar nodo
 }
 
 // iterativa
-template< class T >
-bool ArbolBinarioOrd<T>::buscar(T val) {
-  NodoBinario<T>* nodo = this->raiz;
+template <class T>
+bool ArbolBinarioOrd<T>::buscar(T val)
+{
+  NodoBinario<T> *nodo = this->raiz;
   bool encontrado = false;
 
-  while (nodo != NULL && !encontrado) {
-    if (val < nodo->obtenerDato()) {
+  while (nodo != NULL && !encontrado)
+  {
+    if (val < nodo->obtenerDato())
+    {
       nodo = nodo->obtenerHijoIzq();
-    } else if (val > nodo->obtenerDato()) {
+    }
+    else if (val > nodo->obtenerDato())
+    {
       nodo = nodo->obtenerHijoDer();
-    } else {
+    }
+    else
+    {
       encontrado = true;
     }
   }
@@ -109,32 +136,36 @@ bool ArbolBinarioOrd<T>::buscar(T val) {
 }
 
 // recurrente
-template< class T >
-void ArbolBinarioOrd<T>::preOrden() {
-
+template <class T>
+void ArbolBinarioOrd<T>::preOrden()
+{
 }
 
 // recurrente
-template< class T >
-void ArbolBinarioOrd<T>::inOrden() {
+template <class T>
+void ArbolBinarioOrd<T>::inOrden()
+{
   if (!this->esVacio())
     (this->raiz)->inOrden();
 }
 
 // recurrente
-template< class T >
-void ArbolBinarioOrd<T>::posOrden() {
-
+template <class T>
+void ArbolBinarioOrd<T>::posOrden()
+{
 }
 
 // iterativa
-template< class T >
-void ArbolBinarioOrd<T>::nivelOrden() {
-	if (!this->esVacio()) {
-    std::queue< NodoBinario<T>* > cola;
+template <class T>
+void ArbolBinarioOrd<T>::nivelOrden()
+{
+  if (!this->esVacio())
+  {
+    std::queue<NodoBinario<T> *> cola;
     cola.push(this->raiz);
-    NodoBinario<T>* nodo;
-    while (!cola.empty()) {
+    NodoBinario<T> *nodo;
+    while (!cola.empty())
+    {
       nodo = cola.front();
       cola.pop();
       std::cout << nodo->obtenerDato() << " ";
@@ -144,4 +175,28 @@ void ArbolBinarioOrd<T>::nivelOrden() {
         cola.push(nodo->obtenerHijoDer());
     }
   }
+}
+
+template <class T>
+void ArbolBinarioOrd<T>::imprimirArbol(std::string inicio, NodoBinario<T>* node, bool derecho)
+{
+  if( node != NULL )
+    {
+        std::cout << inicio;
+        std::cout << (derecho ? "├──" : "└──" );
+
+        // print the value of the node
+        std::cout << node->obtenerDato() << std::endl;
+
+        // enter the next tree level - left and right branch
+        imprimirArbol( inicio + (derecho ? "│   " : "    "), node->obtenerHijoDer(), true);
+        imprimirArbol( inicio + (derecho ? "│   " : "    "), node->obtenerHijoIzq(), false);
+    }
+}
+
+template <class T>
+void ArbolBinarioOrd<T>::imprimirArbol()
+{
+  NodoBinario<T> * raiz = this->raiz;
+  imprimirArbol("", raiz, false);    
 }

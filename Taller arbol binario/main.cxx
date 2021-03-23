@@ -4,12 +4,14 @@
 
 int main() {
   int dato;
-  std::cout << "dato:";
-  std::cin >> dato; 
-  NodoBinario<int> nodof;
-  nodof.fijarDato(dato);
   ArbolBinarioOrd<int> nuevo ;
-  nuevo.insertar(dato);
-  std::cout << bool(nuevo.esVacio()) << std::endl;
+  for (int i = 0; i < 12; i++)
+  {
+    std::cout << "dato:";
+    std::cin >> dato;
+    nuevo.insertar(dato);
+  }
+  std::cout << "el valor de la raiz es: " << nuevo.datoRaiz() << std::endl;
+  nuevo.imprimirArbol();
   return 0;
 }
