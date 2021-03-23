@@ -184,11 +184,8 @@ void ArbolBinarioOrd<T>::imprimirArbol(std::string inicio, NodoBinario<T>* node,
     {
         std::cout << inicio;
         std::cout << (derecho ? "├──" : "└──" );
-
-        // print the value of the node
         std::cout << node->obtenerDato() << std::endl;
 
-        // enter the next tree level - left and right branch
         imprimirArbol( inicio + (derecho ? "│   " : "    "), node->obtenerHijoDer(), true);
         imprimirArbol( inicio + (derecho ? "│   " : "    "), node->obtenerHijoIzq(), false);
     }
