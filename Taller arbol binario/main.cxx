@@ -17,15 +17,11 @@ int main()
     std::cin >> dato;
     nuevo.insertar(dato);
   }
-  NodoBinario<int> *raiz = nuevo.nodoRaiz();
   system("clear");
-  std::cout << "el dato de la raiz es: " << raiz->obtenerDato() ;
-  std::cout << "el hijo der : " << raiz->obtenerHijoDer()->obtenerDato();
-  std::cout << "el hijo izq : " << raiz->obtenerHijoIzq()->obtenerDato() << std::endl;
-  nuevo.imprimirArbolNueva(raiz, 1);
-  //nuevo.eliminar(7);
-  //nuevo.imprimirArbol();
-  /*
+  nuevo.imprimirArbol(nuevo.nodoRaiz(), 0);
+  std::cout << "----------------------------------------------- "<< std::endl;
+  nuevo.eliminar(7);
+  nuevo.imprimirArbol(nuevo.nodoRaiz(), 0);
   std::cout << "inorden: "<< std::endl;
   nuevo.inOrden();
   std::cout <<std::endl;
@@ -40,6 +36,5 @@ int main()
   std::cout <<std::endl;
   std::cout << "tamano: "<< std::endl;
   std::cout << nuevo.tamano() << std::endl;
-  */
   return 0;
 }
