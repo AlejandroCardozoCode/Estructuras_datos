@@ -20,6 +20,8 @@ class NodoBinario {
     bool esHoja();
     int altura();
     void inOrden();
+    void preOrden();
+    void posOrden();
 };
 
 #include "NodoBinario.hxx"

@@ -91,3 +91,21 @@ void NodoBinario<T>::inOrden() {
     (this->hijoDer)->inOrden();
 }
 
+template< class T >
+void NodoBinario<T>::preOrden() {
+  std::cout << this->dato << " ";
+  if (this->hijoIzq != NULL)
+    (this->hijoIzq)->preOrden();
+  if (this->hijoDer != NULL)
+    (this->hijoDer)->preOrden();
+}
+
+template< class T >
+void NodoBinario<T>::posOrden() {
+  if (this->hijoIzq != NULL)
+    (this->hijoIzq)->posOrden();
+  if (this->hijoDer != NULL)
+    (this->hijoDer)->posOrden();
+  std::cout << this->dato << " ";
+}
+

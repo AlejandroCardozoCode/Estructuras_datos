@@ -41,8 +41,25 @@ int ArbolBinarioOrd<T>::altura()
 template <class T>
 int ArbolBinarioOrd<T>::tamano()
 {
+  int tamano = 0;
+  if (!this->esVacio())
+  {
+    std::queue<NodoBinario<T> *> cola;
+    cola.push(this->raiz);
+    NodoBinario<T> *nodo;
+    while (!cola.empty())
+    {
+      nodo = cola.front();
+      cola.pop();
+      tamano += 1;
+      if (nodo->obtenerHijoIzq() != NULL)
+        cola.push(nodo->obtenerHijoIzq());
+      if (nodo->obtenerHijoDer() != NULL)
+        cola.push(nodo->obtenerHijoDer());
+    }
+  }
+  return tamano;
 }
-
 
 template <class T>
 bool ArbolBinarioOrd<T>::insertar(T val)
@@ -95,7 +112,7 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
 
   NodoBinario<T> *nodo = this->raiz;
   NodoBinario<T> *padre = this->raiz;
-  NodoBinario<T> * aux, *auxPadre;
+  NodoBinario<T> *aux, *auxPadre;
   bool encontrado = false;
 
   while (nodo != NULL)
@@ -122,11 +139,13 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
     {
       padre->fijarHijoIzq(NULL);
       delete nodo;
+      return true;
     }
     if (val > padre->obtenerDato())
     {
       padre->fijarHijoDer(NULL);
       delete nodo;
+      return true;
     }
   }
 
@@ -182,8 +201,8 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
     delete aux;
     return true;
   }
+  return false;
 }
-
 
 template <class T>
 bool ArbolBinarioOrd<T>::buscar(T val)
@@ -213,6 +232,8 @@ bool ArbolBinarioOrd<T>::buscar(T val)
 template <class T>
 void ArbolBinarioOrd<T>::preOrden()
 {
+  if (!this->esVacio())
+    (this->raiz)->preOrden();
 }
 
 template <class T>
@@ -225,6 +246,8 @@ void ArbolBinarioOrd<T>::inOrden()
 template <class T>
 void ArbolBinarioOrd<T>::posOrden()
 {
+  if (!this->esVacio())
+    (this->raiz)->posOrden();
 }
 
 template <class T>
