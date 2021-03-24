@@ -8,6 +8,7 @@ int main()
   int nodos;
   int dato;
   ArbolBinarioOrd<int> nuevo;
+  
   std::cout <<"ingrese el numero de nodos que quiere meter en el arbol: ";
   std::cin >> nodos;
   for (int i = 0; i < int(nodos); i++)
@@ -16,10 +17,15 @@ int main()
     std::cin >> dato;
     nuevo.insertar(dato);
   }
+  NodoBinario<int> *raiz = nuevo.nodoRaiz();
   system("clear");
-  nuevo.imprimirArbol();
+  std::cout << "el dato de la raiz es: " << raiz->obtenerDato() ;
+  std::cout << "el hijo der : " << raiz->obtenerHijoDer()->obtenerDato();
+  std::cout << "el hijo izq : " << raiz->obtenerHijoIzq()->obtenerDato() << std::endl;
+  nuevo.imprimirArbolNueva(raiz, 1);
   //nuevo.eliminar(7);
   //nuevo.imprimirArbol();
+  /*
   std::cout << "inorden: "<< std::endl;
   nuevo.inOrden();
   std::cout <<std::endl;
@@ -34,5 +40,6 @@ int main()
   std::cout <<std::endl;
   std::cout << "tamano: "<< std::endl;
   std::cout << nuevo.tamano() << std::endl;
+  */
   return 0;
 }

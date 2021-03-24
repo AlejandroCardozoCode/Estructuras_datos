@@ -286,11 +286,44 @@ void ArbolBinarioOrd<T>::imprimirArbol(std::string inicio, NodoBinario<T> *node,
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::imprimirArbol()
+void ArbolBinarioOrd<T>::imprimirArbolNueva(NodoBinario<T>* nodo, int espacio)
 {
+  if (nodo == NULL)
+    return;
+  espacio += 10;
+  imprimirArbolNueva(nodo->obtenerHijoDer(), espacio);
+  std::cout << std::endl;
+  for (int i = 10; i < espacio; i++)
+  {
+    if (i == espacio-8)
+    {
+      std::cout<<"|";
+    }
+    
+    if (i >= (espacio-7))
+    {
+      std::cout<<"-";
+    }
+    else
+      std::cout<<" ";
+    if (i == espacio - 1)
+    {
+      std::cout<<" |  ";
+    }
+    
+  }
+  std::cout<< nodo->obtenerDato()<< "\n";
+  imprimirArbolNueva(nodo->obtenerHijoIzq(), espacio);
+  /*
   std::cout << "<------------------Impresion del Arbol------------------>" << std::endl;
   NodoBinario<T> *raiz = this->raiz;
   imprimirArbol("", raiz, false);
+  */
+}
+template <class T>
+NodoBinario<T>* ArbolBinarioOrd<T>::nodoRaiz()
+{
+  return this->raiz;
 }
 
 template <class T>
