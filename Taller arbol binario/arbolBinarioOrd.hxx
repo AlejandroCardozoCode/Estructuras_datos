@@ -292,3 +292,9 @@ void ArbolBinarioOrd<T>::imprimirArbol()
   NodoBinario<T> *raiz = this->raiz;
   imprimirArbol("", raiz, false);
 }
+
+template <class T>
+void ArbolBinarioOrd<T>::rotacionDerecha(NodoBinario<T>* nodo)
+{
+
+}

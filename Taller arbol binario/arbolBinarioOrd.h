@@ -24,6 +24,7 @@ class ArbolBinarioOrd {
     void nivelOrden();
     void imprimirArbol(std::string inicio ,NodoBinario<T>* nodo, bool derecho);
     void imprimirArbol();
+    void rotacionDerecha(NodoBinario<T>* nodo);
 };
 
 #include "ArbolBinarioOrd.hxx"

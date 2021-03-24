@@ -1,20 +1,25 @@
 #include <iostream>
 #include "ArbolBinarioOrd.h"
 #include "NodoBinario.h"
+#include <string>
 
 int main()
 {
+  int nodos;
   int dato;
   ArbolBinarioOrd<int> nuevo;
-  for (int i = 0; i < 13; i++)
+  std::cout <<"ingrese el numero de nodos que quiere meter en el arbol: ";
+  std::cin >> nodos;
+  for (int i = 0; i < int(nodos); i++)
   {
     std::cout << "dato:";
     std::cin >> dato;
     nuevo.insertar(dato);
   }
+  system("clear");
   nuevo.imprimirArbol();
-  nuevo.eliminar(7);
-  nuevo.imprimirArbol();
+  //nuevo.eliminar(7);
+  //nuevo.imprimirArbol();
   std::cout << "inorden: "<< std::endl;
   nuevo.inOrden();
   std::cout <<std::endl;
@@ -29,6 +34,5 @@ int main()
   std::cout <<std::endl;
   std::cout << "tamano: "<< std::endl;
   std::cout << nuevo.tamano() << std::endl;
-
   return 0;
 }
