@@ -109,12 +109,10 @@ bool ArbolBinarioOrd<T>::insertar(T val)
 template <class T>
 bool ArbolBinarioOrd<T>::eliminar(T val)
 {
-
   NodoBinario<T> *nodo = this->raiz;
   NodoBinario<T> *padre = this->raiz;
   NodoBinario<T> *aux, *auxPadre;
   bool encontrado = false;
-
   while (nodo != NULL)
   {
     if (val < nodo->obtenerDato())
@@ -133,6 +131,12 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
       break;
     }
   }
+
+  if (!encontrado)
+  {
+    return false;
+  }
+
   if (encontrado && nodo->obtenerHijoDer() == NULL && nodo->obtenerHijoIzq() == NULL)
   {
     if (val < padre->obtenerDato())
@@ -156,7 +160,7 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
       if (val < padre->obtenerDato())
       {
         padre->fijarHijoIzq(nodo->obtenerHijoDer());
-        nodo->fijarHijoIzq(NULL);
+        nodo->fijarHijoDer(NULL);
         delete nodo;
         return true;
       }
@@ -181,25 +185,57 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
       if (val > padre->obtenerDato())
       {
         padre->fijarHijoDer(nodo->obtenerHijoIzq());
-        nodo->fijarHijoDer(NULL);
+        nodo->fijarHijoIzq(NULL);
         delete nodo;
         return true;
       }
     }
   }
-
-  if (encontrado && (nodo->obtenerHijoDer() != NULL && nodo->obtenerHijoIzq() != NULL))
+  if (encontrado && nodo->obtenerHijoDer() != NULL && nodo->obtenerHijoIzq() != NULL)
   {
     aux = nodo->obtenerHijoIzq();
-    while (aux->esHoja() == false)
+    if (nodo->obtenerHijoIzq()->obtenerHijoDer() == NULL)
     {
-      auxPadre = aux;
-      aux = aux->obtenerHijoDer();
+      while (true)
+      {
+        auxPadre = aux;
+        if (aux->obtenerHijoDer() == NULL || aux->esHoja())
+        {
+          break;
+        }
+        
+        aux = aux->obtenerHijoDer();
+      }
+    }
+    else
+    {
+      while (true)
+      {
+        if (aux->obtenerHijoDer() == NULL || aux->esHoja())
+        {
+          break;
+        }
+        auxPadre = aux;
+        aux = aux->obtenerHijoDer();
+      }
     }
     nodo->fijarDato(aux->obtenerDato());
-    auxPadre->fijarHijoDer(NULL);
-    delete aux;
-    return true;
+    if (nodo->obtenerDato() == auxPadre->obtenerDato())
+    {
+      nodo->fijarHijoIzq(aux->obtenerHijoIzq());
+      aux->fijarHijoIzq(NULL);
+      aux->fijarHijoDer(NULL);
+      delete aux;
+      return true;
+    }
+    else
+    {
+      auxPadre->fijarHijoDer(NULL);
+      aux->fijarHijoIzq(NULL);
+      aux->fijarHijoDer(NULL);
+      delete aux;
+      return true;
+    }
   }
   return false;
 }
@@ -269,69 +305,26 @@ void ArbolBinarioOrd<T>::nivelOrden()
         cola.push(nodo->obtenerHijoDer());
     }
   }
-}
-
-template <class T>
-void ArbolBinarioOrd<T>::imprimirArbol(std::string inicio, NodoBinario<T> *node, bool derecho)
-{
-  if (node != NULL)
-  {
-    std::cout << inicio;
-    std::cout << (derecho ? "\\__ " : "\\__ ");
-    std::cout << node->obtenerDato() << std::endl;
-
-    imprimirArbol(inicio + (derecho ? "│   " : "    "), node->obtenerHijoDer(), true);
-    imprimirArbol(inicio + (derecho ? "│   " : "    "), node->obtenerHijoIzq(), false);
-  }
+  std::cout << std::endl;
 }
 
 template <class T>
 void ArbolBinarioOrd<T>::imprimirArbol(NodoBinario<T> *nodo, int espacio)
 {
-  int c, aux;
-  c = 1;
-
   if (nodo == NULL)
     return;
-  aux = nodo->obtenerDato();
-
-  while (aux / 10 > 0)
-  {
-    aux = aux / 10;
-    c++;
-  }
   espacio += 10;
   imprimirArbol(nodo->obtenerHijoDer(), espacio);
   std::cout << std::endl;
   for (int i = 10; i < espacio; i++)
   {
-
-    if (i == espacio - (5-(c-1)))
-    {
-
-      std::cout << "|";
-    }
-    if (i > (espacio - (6-(c-1))))
-    {
-      std::cout << "-";
-    }
-    else
-      std::cout << " ";
+    std::cout << " ";
   }
-  if (nodo->obtenerDato() < 0)
-    std::cout << ">>" << nodo->obtenerDato() << "|\n";
-  else
-    std::cout << ">>" << nodo->obtenerDato() << " |\n";
+  std::cout << nodo->obtenerDato() << "\n";
   imprimirArbol(nodo->obtenerHijoIzq(), espacio);
 }
 template <class T>
-NodoBinario<T>* ArbolBinarioOrd<T>::nodoRaiz()
+NodoBinario<T> *ArbolBinarioOrd<T>::nodoRaiz()
 {
   return this->raiz;
-}
-
-template <class T>
-void ArbolBinarioOrd<T>::rotacionDerecha(NodoBinario<T>* nodo)
-{
-
 }
