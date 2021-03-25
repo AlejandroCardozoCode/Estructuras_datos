@@ -1,40 +1,54 @@
 #include <iostream>
+#include <fstream>
 #include "ArbolBinarioOrd.h"
 #include "NodoBinario.h"
 #include <string>
-
-int main()
+#include <ctime>
+void cargarAVL(std::string archivoL,ArbolBinarioOrd<std::string> &arbolAVL)
 {
-  int nodos;
-  int dato;
-  ArbolBinarioOrd<int> nuevo;
-  
-  std::cout <<"ingrese el numero de nodos que quiere meter en el arbol: ";
-  std::cin >> nodos;
-  for (int i = 0; i < int(nodos); i++)
-  {
-    std::cout << "dato:";
-    std::cin >> dato;
-    nuevo.insertar(dato);
-  }
-  system("clear");
-  nuevo.imprimirArbol(nuevo.nodoRaiz(), 0);
-  std::cout << "----------------------------------------------- "<< std::endl;
-  nuevo.eliminar(7);
-  nuevo.imprimirArbol(nuevo.nodoRaiz(), 0);
-  std::cout << "inorden: "<< std::endl;
-  nuevo.inOrden();
-  std::cout <<std::endl;
-  std::cout << "preorden: "<< std::endl;
-  nuevo.preOrden();
-  std::cout <<std::endl;
-  std::cout << "Posorden: "<< std::endl;
-  nuevo.posOrden();
-  std::cout <<std::endl;
-  std::cout << "nivel orden: "<< std::endl;
-  nuevo.nivelOrden();
-  std::cout <<std::endl;
-  std::cout << "tamano: "<< std::endl;
-  std::cout << nuevo.tamano() << std::endl;
-  return 0;
+  std::clock_t init_time = std::clock( );
+  std::ifstream archivo;
+  std::string linea, linea1;
+  archivo.open(archivoL);
+    if (archivo.is_open())
+    {
+
+      while (!archivo.eof())
+      {
+        archivo >> linea;
+        archivo >> linea1;
+
+        if (linea == "A")
+        {
+          arbolAVL.insertar(linea1);
+        }
+        else if(linea == "E")
+          {
+            arbolAVL.eliminar(linea1);
+          }
+      }
+      archivo.close();
+    }else
+    {
+      std::cout << "El archivo " << archivoL << " no existe o no puede ser leído." << std::endl;
+    }
+    std::clock_t end_time = std::clock( );
+    double calc_time = ( end_time - init_time ) / double( CLOCKS_PER_SEC );
+    std::cout<< "It took me " << calc_time << " seconds.\n";
+    return;
 }
+void cargarRN(std::string archivoL,ArbolBinarioOrd<std::string> arbolAVL)
+{
+  
+}
+  int main(int argc, char *argv[])
+  {
+    
+    ArbolBinarioOrd<std::string> arbolAVL;
+    ArbolBinarioOrd<std::string> arbolRN;
+    std::string archivo=argv[1];
+    cargarAVL(archivo,arbolAVL);
+    //cargarRN(archivo,arbolAVL);
+    arbolAVL.nivelOrden();
+    return 0;
+  }
