@@ -1,6 +1,10 @@
 #ifndef __NODOBINARIO_H__
 #define __NODOBINARIO_H__
 
+#include <iostream>
+#include <string>
+#include <list>
+
 template< class T >
 class NodoBinario {
   protected:

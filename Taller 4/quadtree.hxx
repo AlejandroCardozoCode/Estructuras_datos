@@ -1,16 +1,16 @@
-#include "ArbolBinarioOrd.h"
+#include "quadtree.h"
 #include <queue>
 #include <string>
 #include <list>
 
 template <class T>
-ArbolBinarioOrd<T>::ArbolBinarioOrd()
+Quadtree<T>::Quadtree()
 {
   this->raiz = NULL;
 }
 
 template <class T>
-ArbolBinarioOrd<T>::~ArbolBinarioOrd()
+Quadtree<T>::~Quadtree()
 {
   if (this->raiz != NULL)
   {
@@ -20,19 +20,19 @@ ArbolBinarioOrd<T>::~ArbolBinarioOrd()
 }
 
 template <class T>
-bool ArbolBinarioOrd<T>::esVacio()
+bool Quadtree<T>::esVacio()
 {
   return this->raiz == NULL;
 }
 
 template <class T>
-T ArbolBinarioOrd<T>::datoRaiz()
+T Quadtree<T>::datoRaiz()
 {
   return (this->raiz)->obtenerDato();
 }
 
 template <class T>
-int ArbolBinarioOrd<T>::altura()
+int Quadtree<T>::altura()
 {
   if (this->esVacio())
     return -1;
@@ -41,14 +41,14 @@ int ArbolBinarioOrd<T>::altura()
 }
 
 template <class T>
-int ArbolBinarioOrd<T>::tamano()
+int Quadtree<T>::tamano()
 {
   int tamano = 0;
   if (!this->esVacio())
   {
-    std::queue<NodoBinario<T> *> cola;
+    std::queue<QuadNodo<T> *> cola;
     cola.push(this->raiz);
-    NodoBinario<T> *nodo;
+    QuadNodo<T> *nodo;
     while (!cola.empty())
     {
       nodo = cola.front();
@@ -64,60 +64,19 @@ int ArbolBinarioOrd<T>::tamano()
 }
 
 template <class T>
-bool ArbolBinarioOrd<T>::insertar(T val)
+bool Quadtree<T>::insertar(std::string lineaInsertar)
 {
-  NodoBinario<T> *nodo = this->raiz;
-  NodoBinario<T> *padre = this->raiz;
-  bool insertado = false;
-  bool duplicado = false;
-
-  while (nodo != NULL)
-  {
-    padre = nodo;
-    if (val < nodo->obtenerDato())
-    {
-      nodo = nodo->obtenerHijoIzq();
-    }
-    else if (val > nodo->obtenerDato())
-    {
-      nodo = nodo->obtenerHijoDer();
-    }
-    else
-    {
-      duplicado = true;
-      break;
-    }
-  }
-
-  if (!duplicado)
-  {
-    NodoBinario<T> *nuevo = new NodoBinario<T>(val);
-    if (padre == NULL)
-    {
-      this->raiz = new NodoBinario<T>(val);
-      insertado = true;
-      return insertado;
-    }
-
-    if (val < padre->obtenerDato())
-    {
-      padre->fijarHijoIzq(nuevo);
-    }
-    else
-    {
-      padre->fijarHijoDer(nuevo);
-    }
-  }
-  insertado = true;
-  return insertado;
+  
 }
 
+
+
 template <class T>
-bool ArbolBinarioOrd<T>::eliminar(T val)
+bool Quadtree<T>::eliminar(T val)
 {
-  NodoBinario<T> *nodo = this->raiz;
-  NodoBinario<T> *padre = this->raiz;
-  NodoBinario<T> *aux, *auxPadre;
+  QuadNodo<T> *nodo = this->raiz;
+  QuadNodo<T> *padre = this->raiz;
+  QuadNodo<T> *aux, *auxPadre;
   bool encontrado = false;
   while (nodo != NULL)
   {
@@ -247,9 +206,9 @@ bool ArbolBinarioOrd<T>::eliminar(T val)
 }
 
 template <class T>
-bool ArbolBinarioOrd<T>::buscar(T val)
+bool Quadtree<T>::buscar(T val)
 {
-  NodoBinario<T> *nodo = this->raiz;
+  QuadNodo<T> *nodo = this->raiz;
   bool encontrado = false;
 
   while (nodo != NULL && !encontrado)
@@ -272,36 +231,36 @@ bool ArbolBinarioOrd<T>::buscar(T val)
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::preOrden()
+void Quadtree<T>::preOrden()
 {
   if (!this->esVacio())
     (this->raiz)->preOrden();
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::inOrden()
+void Quadtree<T>::inOrden()
 {
   std::list<T> listaNodos;
   if (!this->esVacio())
     (this->raiz)->inOrden();
-  return ;
+  return;
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::posOrden()
+void Quadtree<T>::posOrden()
 {
   if (!this->esVacio())
     (this->raiz)->posOrden();
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::nivelOrden()
+void Quadtree<T>::nivelOrden()
 {
   if (!this->esVacio())
   {
-    std::queue<NodoBinario<T> *> cola;
+    std::queue<QuadNodo<T> *> cola;
     cola.push(this->raiz);
-    NodoBinario<T> *nodo;
+    QuadNodo<T> *nodo;
     while (!cola.empty())
     {
       nodo = cola.front();
@@ -317,7 +276,7 @@ void ArbolBinarioOrd<T>::nivelOrden()
 }
 
 template <class T>
-void ArbolBinarioOrd<T>::imprimirArbol(NodoBinario<T> *nodo, int espacio)
+void Quadtree<T>::imprimirArbol(QuadNodo<T> *nodo, int espacio)
 {
   int c;
   std::string aux;
@@ -352,7 +311,7 @@ void ArbolBinarioOrd<T>::imprimirArbol(NodoBinario<T> *nodo, int espacio)
   imprimirArbol(nodo->obtenerHijoIzq(), espacio);
 }
 template <class T>
-NodoBinario<T> *ArbolBinarioOrd<T>::nodoRaiz()
+QuadNodo<T> *Quadtree<T>::nodoRaiz()
 {
   return this->raiz;
 }

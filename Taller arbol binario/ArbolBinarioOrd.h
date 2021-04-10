@@ -3,6 +3,8 @@
 
 #include "NodoBinario.h"
 #include <iostream>
+#include <list>
+#include <string>
 
 template< class T >
 class ArbolBinarioOrd {
@@ -23,9 +25,7 @@ class ArbolBinarioOrd {
     void posOrden();
     void nivelOrden();
     void imprimirArbol(NodoBinario<T>* nodo, int espacio);
-    void rotacionDerecha(NodoBinario<T>* nodo);
     NodoBinario<T>* nodoRaiz();
-    
 };
 
 #include "ArbolBinarioOrd.hxx"
