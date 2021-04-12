@@ -70,13 +70,13 @@ void QuadNodo<T>::fijarHijoDer(QuadNodo<T>* der) {
 template<class T>
 void QuadNodo<T>::fijarHijoExtIzq(QuadNodo<T>* extIzq) 
 {
-  this->hijoesExtIz = extIzq;
+  this->hijoExtrIzq = extIzq;
 }
 
 template<class T>
 void QuadNodo<T>::fijarHijoExtDer(QuadNodo<T>* extDer) 
 {
-  this->hijoesExtIz = extDer;
+  this->hijoExtrDer = extDer;
 }
 
 template< class T >

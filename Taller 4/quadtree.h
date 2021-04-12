@@ -18,8 +18,8 @@ class Quadtree {
     T datoRaiz();
     int altura();
     int tamano();
-    bool insertar(std::string linesInsertar);
-    bool eliminar(T val);
+    bool insertar1(std::string &linesInsertar);
+    bool insertar2(std::string &linesInsertar, QuadNodo<T>* nodo);
     bool buscar(T val);
     void preOrden();
     void inOrden();

@@ -2,7 +2,7 @@
 #include <queue>
 #include <string>
 #include <list>
-
+#include <sstream>
 template <class T>
 Quadtree<T>::Quadtree()
 {
@@ -62,148 +62,69 @@ int Quadtree<T>::tamano()
   }
   return tamano;
 }
-
 template <class T>
-bool Quadtree<T>::insertar(std::string lineaInsertar)
+bool Quadtree<T>::insertar1(std::string &lineaInsertar)
 {
+  std::stringstream varChar;
+  varChar << lineaInsertar[0];
+  int raizS;
+  varChar >> raizS;
+  this->raiz = new QuadNodo<int>(raizS);
+  lineaInsertar.erase(0,1);
+  insertar2(lineaInsertar, raiz);
+  return true;
+}
+template <class T>
+bool Quadtree<T>::insertar2(std::string &lineaInsertar, QuadNodo<T>* nodo)
+{
+  int hijoExtDerVar, hijoExtIzqVar, hijoDerVar, hijoIzqVar;
+  std::stringstream varCharhijoExtIzqVar, varCharhijoIzqVar, varCharhijoDerVar, varCharhijoExtDerVar;
+
+  varCharhijoExtIzqVar << lineaInsertar[0];
+  varCharhijoIzqVar<< lineaInsertar[1];
+  varCharhijoDerVar << lineaInsertar[2];
+  varCharhijoExtDerVar << lineaInsertar[3];
+
+  varCharhijoExtIzqVar >> hijoExtIzqVar;
+  varCharhijoIzqVar >> hijoIzqVar;
+  varCharhijoDerVar >> hijoDerVar;
+  varCharhijoExtDerVar >> hijoExtDerVar;
+
+  QuadNodo<int> *nuevohijoExtIzqVar = new QuadNodo<int>(hijoExtIzqVar);
+  QuadNodo<int> *nuevohijoIzqVar = new QuadNodo<int>(hijoIzqVar);
+  QuadNodo<int> *nuevohijoDerVar = new QuadNodo<int>(hijoDerVar);
+  QuadNodo<int> *nuevohijoExtDerVar = new QuadNodo<int>(hijoExtDerVar);
+
+  nodo->fijarHijoExtIzq(nuevohijoExtIzqVar);
+  nodo->fijarHijoIzq(nuevohijoIzqVar);
+  nodo->fijarHijoDer(nuevohijoDerVar);
+  nodo->fijarHijoExtDer(nuevohijoExtDerVar);
+
+  lineaInsertar.erase(0,4);
+
+  if (nodo->obtenerHijoExtIzq()->obtenerDato() == 2)
+  {
+    insertar2(lineaInsertar, nodo->obtenerHijoExtIzq());
+  }
+
+  if (nodo->obtenerHijoIzq()->obtenerDato() == 2)
+  {
+    insertar2(lineaInsertar, nodo->obtenerHijoIzq());
+  }
+
+  if (nodo->obtenerHijoDer()->obtenerDato() == 2)
+  {
+    insertar2(lineaInsertar, nodo->obtenerHijoDer());
+  }
+
+  if (nodo->obtenerhijoExtrDer()->obtenerDato() == 2)
+  {
+    insertar2(lineaInsertar, nodo->obtenerhijoExtrDer());
+  }
   
+  return true;
 }
 
-
-
-template <class T>
-bool Quadtree<T>::eliminar(T val)
-{
-  QuadNodo<T> *nodo = this->raiz;
-  QuadNodo<T> *padre = this->raiz;
-  QuadNodo<T> *aux, *auxPadre;
-  bool encontrado = false;
-  while (nodo != NULL)
-  {
-    if (val < nodo->obtenerDato())
-    {
-      padre = nodo;
-      nodo = nodo->obtenerHijoIzq();
-    }
-    else if (val > nodo->obtenerDato())
-    {
-      padre = nodo;
-      nodo = nodo->obtenerHijoDer();
-    }
-    else
-    {
-      encontrado = true;
-      break;
-    }
-  }
-
-  if (!encontrado)
-  {
-    return false;
-  }
-
-  if (encontrado && nodo->obtenerHijoDer() == NULL && nodo->obtenerHijoIzq() == NULL)
-  {
-    if (val < padre->obtenerDato())
-    {
-      padre->fijarHijoIzq(NULL);
-      delete nodo;
-      return true;
-    }
-    if (val > padre->obtenerDato())
-    {
-      padre->fijarHijoDer(NULL);
-      delete nodo;
-      return true;
-    }
-  }
-
-  if (encontrado && (nodo->obtenerHijoDer() == NULL ^ nodo->obtenerHijoIzq() == NULL))
-  {
-    if (nodo->obtenerHijoIzq() == NULL)
-    {
-      if (val < padre->obtenerDato())
-      {
-        padre->fijarHijoIzq(nodo->obtenerHijoDer());
-        nodo->fijarHijoDer(NULL);
-        delete nodo;
-        return true;
-      }
-      if (val > padre->obtenerDato())
-      {
-        padre->fijarHijoDer(nodo->obtenerHijoDer());
-        nodo->fijarHijoDer(NULL);
-        delete nodo;
-        return true;
-      }
-    }
-
-    if (nodo->obtenerHijoDer() == NULL)
-    {
-      if (val < padre->obtenerDato())
-      {
-        padre->fijarHijoIzq(nodo->obtenerHijoIzq());
-        nodo->fijarHijoIzq(NULL);
-        delete nodo;
-        return true;
-      }
-      if (val > padre->obtenerDato())
-      {
-        padre->fijarHijoDer(nodo->obtenerHijoIzq());
-        nodo->fijarHijoIzq(NULL);
-        delete nodo;
-        return true;
-      }
-    }
-  }
-  if (encontrado && nodo->obtenerHijoDer() != NULL && nodo->obtenerHijoIzq() != NULL)
-  {
-    aux = nodo->obtenerHijoIzq();
-    if (nodo->obtenerHijoIzq()->obtenerHijoDer() == NULL)
-    {
-      while (true)
-      {
-        auxPadre = aux;
-        if (aux->obtenerHijoDer() == NULL || aux->esHoja())
-        {
-          break;
-        }
-
-        aux = aux->obtenerHijoDer();
-      }
-    }
-    else
-    {
-      while (true)
-      {
-        if (aux->obtenerHijoDer() == NULL || aux->esHoja())
-        {
-          break;
-        }
-        auxPadre = aux;
-        aux = aux->obtenerHijoDer();
-      }
-    }
-    nodo->fijarDato(aux->obtenerDato());
-    if (nodo->obtenerDato() == auxPadre->obtenerDato())
-    {
-      nodo->fijarHijoIzq(aux->obtenerHijoIzq());
-      aux->fijarHijoIzq(NULL);
-      aux->fijarHijoDer(NULL);
-      delete aux;
-      return true;
-    }
-    else
-    {
-      auxPadre->fijarHijoDer(NULL);
-      aux->fijarHijoIzq(NULL);
-      aux->fijarHijoDer(NULL);
-      delete aux;
-      return true;
-    }
-  }
-  return false;
-}
 
 template <class T>
 bool Quadtree<T>::buscar(T val)
