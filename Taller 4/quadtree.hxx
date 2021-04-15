@@ -81,42 +81,40 @@ bool Quadtree<T>::insertar2(std::string &lineaInsertar, QuadNodo<T>* nodo)
   std::stringstream varCharhijoExtIzqVar, varCharhijoIzqVar, varCharhijoDerVar, varCharhijoExtDerVar;
 
   varCharhijoExtIzqVar << lineaInsertar[0];
-  varCharhijoIzqVar<< lineaInsertar[1];
-  varCharhijoDerVar << lineaInsertar[2];
-  varCharhijoExtDerVar << lineaInsertar[3];
-
   varCharhijoExtIzqVar >> hijoExtIzqVar;
-  varCharhijoIzqVar >> hijoIzqVar;
-  varCharhijoDerVar >> hijoDerVar;
-  varCharhijoExtDerVar >> hijoExtDerVar;
-
   QuadNodo<int> *nuevohijoExtIzqVar = new QuadNodo<int>(hijoExtIzqVar);
-  QuadNodo<int> *nuevohijoIzqVar = new QuadNodo<int>(hijoIzqVar);
-  QuadNodo<int> *nuevohijoDerVar = new QuadNodo<int>(hijoDerVar);
-  QuadNodo<int> *nuevohijoExtDerVar = new QuadNodo<int>(hijoExtDerVar);
-
   nodo->fijarHijoExtIzq(nuevohijoExtIzqVar);
-  nodo->fijarHijoIzq(nuevohijoIzqVar);
-  nodo->fijarHijoDer(nuevohijoDerVar);
-  nodo->fijarHijoExtDer(nuevohijoExtDerVar);
-
-  lineaInsertar.erase(0,4);
-
+  lineaInsertar.erase(0,1);
   if (nodo->obtenerHijoExtIzq()->obtenerDato() == 2)
   {
     insertar2(lineaInsertar, nodo->obtenerHijoExtIzq());
   }
 
+  varCharhijoIzqVar<< lineaInsertar[0];
+  varCharhijoIzqVar >> hijoIzqVar;
+  QuadNodo<int> *nuevohijoIzqVar = new QuadNodo<int>(hijoIzqVar);
+  nodo->fijarHijoIzq(nuevohijoIzqVar);
+  lineaInsertar.erase(0,1);
   if (nodo->obtenerHijoIzq()->obtenerDato() == 2)
   {
     insertar2(lineaInsertar, nodo->obtenerHijoIzq());
   }
 
+  varCharhijoDerVar << lineaInsertar[0];
+  varCharhijoDerVar >> hijoDerVar;
+  QuadNodo<int> *nuevohijoDerVar = new QuadNodo<int>(hijoDerVar);
+  nodo->fijarHijoDer(nuevohijoDerVar);
+  lineaInsertar.erase(0,1);
   if (nodo->obtenerHijoDer()->obtenerDato() == 2)
   {
     insertar2(lineaInsertar, nodo->obtenerHijoDer());
   }
 
+  varCharhijoExtDerVar << lineaInsertar[0];
+  varCharhijoExtDerVar >> hijoExtDerVar;
+  QuadNodo<int> *nuevohijoExtDerVar = new QuadNodo<int>(hijoExtDerVar);
+  nodo->fijarHijoExtDer(nuevohijoExtDerVar);
+  lineaInsertar.erase(0,1);
   if (nodo->obtenerhijoExtrDer()->obtenerDato() == 2)
   {
     insertar2(lineaInsertar, nodo->obtenerhijoExtrDer());
@@ -208,7 +206,7 @@ void Quadtree<T>::imprimirArbol(QuadNodo<T> *nodo, int espacio)
   aux = nodo->obtenerDato();
   c = aux.size();
   espacio += 20;
-  imprimirArbol(nodo->obtenerHijoDer(), espacio);
+  imprimirArbol(nodo->obtenerhijoExtrDer(), espacio);
   std::cout << std::endl;
   for (int i = 20; i < espacio; i++)
   {
@@ -229,7 +227,7 @@ void Quadtree<T>::imprimirArbol(QuadNodo<T> *nodo, int espacio)
     std::cout << ">>" << nodo->obtenerDato() << "|\n";
   else
     std::cout << ">>" << nodo->obtenerDato() << " |\n";
-  imprimirArbol(nodo->obtenerHijoIzq(), espacio);
+  imprimirArbol(nodo->obtenerHijoExtIzq(), espacio);
 }
 template <class T>
 QuadNodo<T> *Quadtree<T>::nodoRaiz()
