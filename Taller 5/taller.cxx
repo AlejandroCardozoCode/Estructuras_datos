@@ -11,17 +11,6 @@ int filas, cols;
 
 // -------------------------------------------------------------------------
 
-struct Point
-{
-    float X, Y, Z;
-    float distanceTo(const Point &b) const
-    {
-        float x = X - b.X;
-        float y = Y - b.Y;
-        float z = Z - b.Z;
-        return (std::sqrt((x * x) + (y * y) + (z * z)));
-    }
-};
 // -------------------------------------------------------------------------
 
 // TODO 1: typedef Graph< Point, float > TGraph
@@ -41,7 +30,7 @@ int main(int argc, char *argv[])
     long end_id = std::atoi(argv[3]);
 
     // TODO 2: TGraph g;
-    Grafo<Point> grafo;
+    Grafo grafo;
     // Load file in a buffer
     std::ifstream in_mesh_stream(argv[1], std::ifstream::binary);
     if (!in_mesh_stream)
@@ -68,6 +57,7 @@ int main(int argc, char *argv[])
         in_mesh >> pnt.X >> pnt.Y >> pnt.Z;
 
         // TODO 3: g.AddVertex( pnt );
+        std::cout << " se va a igrasar el verice " << pnt.X << " " << pnt.Y << " " << pnt.Z << std::endl;
         grafo.insertarVertice(pnt);
     } // rof
 
@@ -106,7 +96,7 @@ int main(int argc, char *argv[])
 
     } // fi
 
-    //grafo.imprimirMatrix();
+    grafo.imprimirMatrix();
     
 
     /*

@@ -1,7 +1,7 @@
 #include "grafo.h"
 
-template<class T>
-void Grafo<T>::iniciarMatrix(int filas, int cols) 
+
+void Grafo::iniciarMatrix(int filas, int cols) 
 {
     matrixAristas.resize(filas);
     for (int i = 0; i < filas; ++i)
@@ -12,8 +12,8 @@ void Grafo<T>::iniciarMatrix(int filas, int cols)
 
 
 
-template<class T>
-void Grafo<T>::agrandarFilaCols() 
+
+void Grafo::agrandarFilaCols() 
 {
     int nuevoValor = obtenerValorDimencionMatrix() + 1;
 
@@ -41,15 +41,15 @@ void Grafo<T>::agrandarFilaCols()
 }
 
 
-template<class T>
-int Grafo<T>::obtenerValorDimencionMatrix() 
+
+int Grafo::obtenerValorDimencionMatrix() 
 {
     return matrixAristas.size();
 }
 
 
-template<class T>
-void Grafo<T>::insertarVertice(T vertice) 
+
+void Grafo::insertarVertice(Point vertice) 
 {
     if (!buscarVerticePuntoBooleana(vertice))
     {
@@ -59,46 +59,57 @@ void Grafo<T>::insertarVertice(T vertice)
 }
 
 
-template<class T>
-T Grafo<T>::buscarVerticePunto(T verticeBuscar) 
-{
-    typename std::vector<T>::iterator it;
-    it = find(verticesArreglo.begin(), verticesArreglo.end(), verticeBuscar);
-    if (it != verticesArreglo.end())
-        return *it;
-}
 
-
-template<class T>
-bool Grafo<T>::buscarVerticePuntoBooleana(T vertice) 
+Point Grafo::buscarVerticePunto(Point verticeBuscar) 
 {
-    typename std::vector<T>::iterator it;
-    it = find(verticesArreglo.begin(), verticesArreglo.end(), vertice);
-    if (it != verticesArreglo.end())
-        return true;
-    else
+    Point aux;
+    aux.X =-1;
+    aux.Y =-1;
+    aux.Z =-1;
+
+    for (int i = 0; i < obtenerTamanoArregloVectores(); i++)
     {
-        return false;
+        if(verticesArreglo[i].X == verticeBuscar.X && verticesArreglo[i].Y == verticeBuscar.Y && verticesArreglo[i].Z == verticeBuscar.Z)
+        {
+            return verticesArreglo[i];
+        }
+
     }
+    return aux;
 }
 
 
-template<class T>
-int Grafo<T>::buscarVerticePosicion(T verticeBuscar) 
+
+bool Grafo::buscarVerticePuntoBooleana(Point vertice) 
 {
-    typename std::vector<T>::iterator it;
-    it = find(verticesArreglo.begin(), verticesArreglo.end(), verticeBuscar);
-    int distancia = std::distance(verticesArreglo.begin(), it);
-    if (it != verticesArreglo.end())
-        return distancia;
-    else
-        return -1;
+    for (int i = 0; i < obtenerTamanoArregloVectores(); i++)
+    {
+        if(verticesArreglo[i].X == vertice.X && verticesArreglo[i].Y == vertice.Y && verticesArreglo[i].Z == vertice.Z)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 
 
-template<class T>
-void Grafo<T>::insetarArista(T puntoInicio, T puntoFinal, int costo) 
+int Grafo::buscarVerticePosicion(Point verticeBuscar) 
+{
+    for (int i = 0; i < obtenerTamanoArregloVectores(); i++)
+    {
+        if(verticesArreglo[i].X == verticeBuscar.X && verticesArreglo[i].Y == verticeBuscar.Y && verticesArreglo[i].Z == verticeBuscar.Z)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+
+
+void Grafo::insetarArista(Point puntoInicio, Point puntoFinal, int costo) 
 {
     int posicionVerticeInicio, posicionVerticeFinal;
     posicionVerticeInicio = buscarVerticePosicion(puntoInicio);
@@ -114,45 +125,47 @@ void Grafo<T>::insetarArista(T puntoInicio, T puntoFinal, int costo)
 }
 
 
-template<class T>
-float Grafo<T>::buscarArista(T puntoInicio, T puntoFinal) 
+
+float Grafo::buscarArista(Point puntoInicio, Point puntoFinal) 
 {
     int posicionVerticeInicio, posicionVerticeFinal;
+    float valor;
     posicionVerticeInicio = buscarVerticePosicion(puntoInicio);
     posicionVerticeFinal = buscarVerticePosicion(puntoFinal);
 
     if(posicionVerticeFinal != -1 && posicionVerticeInicio != -1 )
     {
-        return matrixAristas[posicionVerticeInicio][posicionVerticeFinal];
+        valor =  matrixAristas[posicionVerticeInicio][posicionVerticeFinal];
     }
+    return valor;
 }
 
 
 
-template<class T>
-T Grafo<T>::buscarVerticePorPosicion(int posicion) 
+
+Point Grafo::buscarVerticePorPosicion(int posicion) 
 {
-    typename std::vector<T>::iterator it = verticesArreglo.begin() + posicion;
-    T aux = *it;
+    typename std::vector<Point>::iterator it = verticesArreglo.begin() + posicion;
+    Point aux = *it;
     return aux;
 }
 
 
-template<class T>
-int Grafo<T>::obtenerTamanoArregloVectores() 
+
+int Grafo::obtenerTamanoArregloVectores() 
 {
     return verticesArreglo.size();
 }
 
 
-template<class T>
-void Grafo<T>::imprimirMatrix() 
+
+void Grafo::imprimirMatrix() 
 {
     for (int i = 0; i < obtenerValorDimencionMatrix(); i++)
     {
         for (int j = 0; j < obtenerValorDimencionMatrix(); j++)
         {
-            std::cout << matrixAristas[i][j];
+            std::cout << "|" << matrixAristas[i][j] << "|";
         }
         std::cout << std::endl;
     }

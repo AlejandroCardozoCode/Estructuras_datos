@@ -22,6 +22,16 @@ struct Point
 
 int main(int argc, char *argv[])
 {
+    Grafo<int> grafo;
+    grafo.insertarVertice(2);
+    grafo.insertarVertice(5);
+    grafo.insertarVertice(1);
+    grafo.insertarVertice(7);
+    grafo.insetarArista(2,1,7);
+    std::cout << grafo.obtenerTamanoArregloVectores() << std::endl;
+    grafo.imprimirMatrix();
+
+    /*
     Grafo<Point> grafo;
 
     std::ifstream archivo;
@@ -42,4 +52,5 @@ int main(int argc, char *argv[])
 
         //grafo.imprimirMatrix();
     }
+    */
 }
