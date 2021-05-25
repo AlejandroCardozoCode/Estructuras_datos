@@ -36,7 +36,7 @@ public:
     int buscarVerticePosicion(Point verticeBuscar);
     void insetarArista(Point puntoInicio, Point puntoFinal, int costo);
     float buscarArista(Point puntoInicio, Point puntoFinal);
-    Point buscarVerticePorPosicion(int posicion);
+    Point buscarVerticePorPosicion(float posicion);
     int obtenerTamanoArregloVectores();
     void imprimirMatrix();
     bool buscarVerticePuntoBooleana(Point vertice);
@@ -44,11 +44,11 @@ public:
 
     //implementacion Dijkstra
 
-    std::vector<float> encontrarVecinosVertice(Point vertice);
-    void imprimirVecinos(Point vertice);
+    std::vector<float> encontrarVecinosVertice(float vertice);
+    void imprimirVecinos(float vertice);
     Point obtenerVerticeOrigen();
-    float dijkstra(Point inicio, Point final);
-    int buscarPosicionVerticeMenorCosto(std::vector<float> arregloDistancias, std::vector<float> arregloVerticesFuncion);
+    std::vector<Point> dijkstra(Point inicio, Point final);
+    float buscarPosicionVerticeMenorCosto(std::vector<float> arregloDistancias, std::vector<float> arregloVerticesFuncion);
 
 };
 

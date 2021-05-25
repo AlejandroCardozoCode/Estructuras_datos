@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
         in_mesh >> pnt.X >> pnt.Y >> pnt.Z;
 
         // TODO 3: g.AddVertex( pnt );
-        std::cout << " se va a igrasar el verice " << pnt.X << " " << pnt.Y << " " << pnt.Z << std::endl;
         grafo.insertarVertice(pnt);
     } // rof
 
@@ -84,8 +83,6 @@ int main(int argc, char *argv[])
         grafo.insetarArista(startP, endP, costo);
         grafo.insetarArista(endP, startP, costo);
 
-        
-
     } // rof
     delete[] in_mesh_file_buffer;
 
@@ -96,10 +93,6 @@ int main(int argc, char *argv[])
 
     } // fi
 
-    grafo.imprimirMatrix();
-    std::vector<Point> vector = grafo.obtenerVector();
-    grafo.imprimirVecinos(vector[2]);
-    
 
     /*
     TODO 5:
@@ -111,6 +104,15 @@ int main(int argc, char *argv[])
     << vertices[ path[ i ] ].Y << " "
     << vertices[ path[ i ] ].Z << std::endl;
   */
+    std::vector<Point> dk = grafo.dijkstra(grafo.buscarVerticePorPosicion((float)start_id), grafo.buscarVerticePorPosicion((float)end_id));
+    std::cout << dk.size() << std::endl;
+    for (int i = 0; i < dk.size(); i++)
+    {
+        std::cout
+            << dk[i].X << " "
+            << dk[i].Y << " "
+            << dk[i].Z << std::endl;
+    }
 
     return (0);
 }

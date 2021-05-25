@@ -120,7 +120,7 @@ float Grafo::buscarArista(Point puntoInicio, Point puntoFinal)
     return valor;
 }
 
-Point Grafo::buscarVerticePorPosicion(int posicion)
+Point Grafo::buscarVerticePorPosicion(float posicion)
 {
     typename std::vector<Point>::iterator it = verticesArreglo.begin() + posicion;
     Point aux = *it;
@@ -149,13 +149,12 @@ std::vector<Point> Grafo::obtenerVector()
     return verticesArreglo;
 }
 
-std::vector<float> Grafo::encontrarVecinosVertice(Point vertice)
+std::vector<float> Grafo::encontrarVecinosVertice(float vertice)
 {
     std::vector<float> vecinos;
-    int posicionVetice = buscarVerticePosicion(vertice);
     for (int i = 0; i < obtenerValorDimencionMatrix(); i++)
     {
-        if (matrixAristas[i][posicionVetice] != 0)
+        if (matrixAristas[i][vertice] != 0)
         {
             vecinos.push_back(i);
         }
@@ -163,7 +162,7 @@ std::vector<float> Grafo::encontrarVecinosVertice(Point vertice)
     return vecinos;
 }
 
-void Grafo::imprimirVecinos(Point vertice)
+void Grafo::imprimirVecinos(float vertice)
 {
     std::vector<float> vecinos = encontrarVecinosVertice(vertice);
     for (int i = 0; i < vecinos.size(); i++)
@@ -177,17 +176,23 @@ Point Grafo::obtenerVerticeOrigen()
     return verticesArreglo[0];
 }
 
-float Grafo::dijkstra(Point inicio, Point final)
+std::vector<Point> Grafo::dijkstra(Point inicio, Point final)
 {
-    std::vector<float> arregloDistancias;
-    std::vector<float> arregloPredecesores;
-    std::vector<float> arregloVerticesVisitados;
-    std::vector<float> arregloVerticesFuncion;
-    int posicionMenorCosto;
+    std::vector<float> arregloDistancias; //dis
+    std::vector<float> arregloPredecesores;//pre
+    std::vector<float> arregloVerticesVisitados;//S
+    std::vector<float> arregloVerticesFuncion;//Q
+    std::vector<float> vecinosActual;
+    std::vector<Point> camino;
+    bool caminoEncontrado = false;
+    float posicionMenorCosto, posicionPuntoInicial, posicionPuntoFinal;
     Point verticeMenorDistancia;
+    posicionPuntoInicial = buscarVerticePosicion(inicio);
+    posicionPuntoFinal = buscarVerticePosicion(final);
+
     for (int i = 0; i < obtenerTamanoArregloVectores(); i++)
     {
-        if (i == 0)
+        if (i == posicionPuntoInicial)
         {
             arregloDistancias.push_back(0);
         }
@@ -199,29 +204,138 @@ float Grafo::dijkstra(Point inicio, Point final)
 
     for (int i = 0; i < obtenerTamanoArregloVectores(); i++)
     {
-        if (i == 0)
+        arregloVerticesFuncion.push_back(i);
+    }
+
+    for (int i = 0; i < obtenerTamanoArregloVectores(); i++)
+    {
+        if (i == posicionPuntoInicial)
         {
-            arregloDistancias.push_back(0);
+            arregloPredecesores.push_back(0);
         }
         else
         {
-            arregloDistancias.push_back(INFINITY);
+            arregloPredecesores.push_back(INFINITY);
         }
     }
+/*
+    std::cout << "Distancias: ";
+        for (int i = 0; i < arregloDistancias.size(); i++)
+        {
+            std::cout << arregloDistancias[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "Pre: ";
+        for (int i = 0; i < arregloPredecesores.size(); i++)
+        {
+            std::cout << arregloPredecesores[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "S: ";
+        for (int i = 0; i < arregloVerticesVisitados.size(); i++)
+        {
+            std::cout << arregloVerticesVisitados[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "Q: ";
+        for (int i = 0; i < arregloVerticesFuncion.size(); i++)
+        {
+            std::cout << arregloVerticesFuncion[i] << " ";
+        }
+        std::cout << std::endl;
+    */
 
     while (!arregloVerticesFuncion.empty())
     {
-        
+        //std::cout << "----------------------------------" << std::endl;
         posicionMenorCosto = buscarPosicionVerticeMenorCosto(arregloDistancias, arregloVerticesFuncion);
 
         arregloVerticesVisitados.push_back(arregloVerticesFuncion[posicionMenorCosto]);
+
+        //obtener vecinos del que esta en s
+        vecinosActual = encontrarVecinosVertice(arregloVerticesFuncion[posicionMenorCosto]);
+        // ver si se puede mejorar el costo de distancia para cada vecion
+
+        for (int i = 0; i < vecinosActual.size(); i++)
+        {
+            /*
+            std::cout <<"Vertice " << arregloVerticesFuncion[posicionMenorCosto] 
+            << ""  " El costo hasta el vecino " << vecinosActual[i] 
+            << " es " << ( matrixAristas[arregloVerticesFuncion[posicionMenorCosto] ][vecinosActual[i]] + arregloDistancias[posicionMenorCosto] ) 
+            << " suma de  costo de la matriz en posicion x: " << arregloVerticesFuncion[posicionMenorCosto]  << " y Y: " << vecinosActual[i] 
+            << " es de: " << matrixAristas[posicionMenorCosto][vecinosActual[i]] 
+            << " y acumulado en el arreglo " << arregloDistancias[arregloVerticesFuncion[posicionMenorCosto]] << std::endl;
+*/
+            if(arregloDistancias[vecinosActual[i]] > ( matrixAristas[arregloVerticesFuncion[posicionMenorCosto] ][vecinosActual[i]] + arregloDistancias[arregloVerticesFuncion[posicionMenorCosto]] ))
+            {
+                arregloDistancias[vecinosActual[i]] = ( matrixAristas[arregloVerticesFuncion[posicionMenorCosto] ][vecinosActual[i]] + arregloDistancias[arregloVerticesFuncion[posicionMenorCosto]] );
+                arregloPredecesores[vecinosActual[i]] = arregloVerticesFuncion[posicionMenorCosto];
+            }
+        }
+
         arregloVerticesFuncion.erase(arregloVerticesFuncion.begin() + posicionMenorCosto);
+/*
+        std::cout << "Distancias: ";
+        for (int i = 0; i < arregloDistancias.size(); i++)
+        {
+            std::cout << arregloDistancias[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "Pre: ";
+        for (int i = 0; i < arregloPredecesores.size(); i++)
+        {
+            std::cout << arregloPredecesores[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "S: ";
+        for (int i = 0; i < arregloVerticesVisitados.size(); i++)
+        {
+            std::cout << arregloVerticesVisitados[i] << " ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "Q: ";
+        for (int i = 0; i < arregloVerticesFuncion.size(); i++)
+        {
+            std::cout << arregloVerticesFuncion[i] << " ";
+        }
+        std::cout << std::endl;
+        */
         
+        // si mejora agregar en el vector de predecesores         
     }
-    return 1;
+    camino.push_back(buscarVerticePorPosicion(posicionPuntoFinal));
+    std::cout << "El costo total es de: " << arregloDistancias[posicionPuntoFinal] << std::endl;
+    
+    while(!caminoEncontrado)
+    {
+        for (int i = 0; i < arregloDistancias.size(); i++)
+        {
+            if(i == posicionPuntoFinal)
+            {
+                if(arregloPredecesores[i] == posicionPuntoInicial)
+                {
+                    camino.push_back(buscarVerticePorPosicion(arregloPredecesores[i]));
+                    caminoEncontrado = true;
+                }
+                else
+                {
+                    camino.push_back(buscarVerticePorPosicion(arregloPredecesores[i]));
+                    posicionPuntoFinal = arregloPredecesores[i];
+                }
+            }
+        }
+    }
+    std::reverse(camino.begin(), camino.end());
+    return camino;
 }
 
-int Grafo::buscarPosicionVerticeMenorCosto(std::vector<float> arregloDistancias, std::vector<float> arregloVerticesFuncion)
+float Grafo::buscarPosicionVerticeMenorCosto(std::vector<float> arregloDistancias, std::vector<float> arregloVerticesFuncion)
 {
     float posicionMenor = -1, valorMenor = INFINITY;
 
@@ -233,6 +347,5 @@ int Grafo::buscarPosicionVerticeMenorCosto(std::vector<float> arregloDistancias,
             valorMenor = arregloDistancias[arregloVerticesFuncion[j]];
         }
     }
-
     return posicionMenor;
 }
