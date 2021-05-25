@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <math.h>
 
 
 struct Point
@@ -39,6 +40,15 @@ public:
     int obtenerTamanoArregloVectores();
     void imprimirMatrix();
     bool buscarVerticePuntoBooleana(Point vertice);
+    std::vector<Point> obtenerVector();
+
+    //implementacion Dijkstra
+
+    std::vector<float> encontrarVecinosVertice(Point vertice);
+    void imprimirVecinos(Point vertice);
+    Point obtenerVerticeOrigen();
+    float dijkstra(Point inicio, Point final);
+    int buscarPosicionVerticeMenorCosto(std::vector<float> arregloDistancias, std::vector<float> arregloVerticesFuncion);
 
 };
 

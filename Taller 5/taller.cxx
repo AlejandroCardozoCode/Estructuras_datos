@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
     } // fi
 
     grafo.imprimirMatrix();
+    std::vector<Point> vector = grafo.obtenerVector();
+    grafo.imprimirVecinos(vector[2]);
     
 
     /*
