@@ -34,7 +34,7 @@ public:
     void insertarVertice(Point vertice);
     Point buscarVerticePunto(Point verticeBuscar);
     int buscarVerticePosicion(Point verticeBuscar);
-    void insetarArista(Point puntoInicio, Point puntoFinal, int costo);
+    void insetarArista(Point puntoInicio, Point puntoFinal, float costo);
     float buscarArista(Point puntoInicio, Point puntoFinal);
     Point buscarVerticePorPosicion(float posicion);
     int obtenerTamanoArregloVectores();

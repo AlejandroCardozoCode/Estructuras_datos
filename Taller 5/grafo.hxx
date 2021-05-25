@@ -91,7 +91,7 @@ int Grafo::buscarVerticePosicion(Point verticeBuscar)
     return -1;
 }
 
-void Grafo::insetarArista(Point puntoInicio, Point puntoFinal, int costo)
+void Grafo::insetarArista(Point puntoInicio, Point puntoFinal, float costo)
 {
     int posicionVerticeInicio, posicionVerticeFinal;
     posicionVerticeInicio = buscarVerticePosicion(puntoInicio);
@@ -250,7 +250,10 @@ std::vector<Point> Grafo::dijkstra(Point inicio, Point final)
 
     while (!arregloVerticesFuncion.empty())
     {
-        //std::cout << "----------------------------------" << std::endl;
+        /*
+        std::cout << "----------------------------------" << std::endl;
+        std::cout << "el valor menor es de: " << arregloVerticesFuncion[posicionMenorCosto] << std::endl;
+        */
         posicionMenorCosto = buscarPosicionVerticeMenorCosto(arregloDistancias, arregloVerticesFuncion);
 
         arregloVerticesVisitados.push_back(arregloVerticesFuncion[posicionMenorCosto]);
@@ -258,7 +261,6 @@ std::vector<Point> Grafo::dijkstra(Point inicio, Point final)
         //obtener vecinos del que esta en s
         vecinosActual = encontrarVecinosVertice(arregloVerticesFuncion[posicionMenorCosto]);
         // ver si se puede mejorar el costo de distancia para cada vecion
-
         for (int i = 0; i < vecinosActual.size(); i++)
         {
             /*
@@ -309,9 +311,10 @@ std::vector<Point> Grafo::dijkstra(Point inicio, Point final)
         
         // si mejora agregar en el vector de predecesores         
     }
+
     camino.push_back(buscarVerticePorPosicion(posicionPuntoFinal));
     std::cout << "El costo total es de: " << arregloDistancias[posicionPuntoFinal] << std::endl;
-    
+
     while(!caminoEncontrado)
     {
         for (int i = 0; i < arregloDistancias.size(); i++)
