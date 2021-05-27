@@ -59,7 +59,12 @@ int main(int argc, char *argv[])
         // TODO 3: g.AddVertex( pnt );
         grafo.insertarVertice(pnt);
     } // rof
+    std::cout << "termino la insercion de los datos de los vertices" << std::endl;
+    grafo.generarArregloVertices();
+    std::cout << "termino la verificacion de vertices y asignacion de la matriz" << std::endl;
 
+    grafo.iniciarMatrix(grafo.obtenerTamanoArregloVectores());
+    std::cout << "termino la verificacion de vertices y asignacion de la matriz" << std::endl;
     // Read edges
     long nEdges;
     float costo = 0;
@@ -81,7 +86,6 @@ int main(int argc, char *argv[])
         endP = grafo.buscarVerticePorPosicion((int)end);
         costo = startP.distanceTo(endP);
         grafo.insetarArista(startP, endP, costo);
-        grafo.insetarArista(endP, startP, costo);
 
     } // rof
     delete[] in_mesh_file_buffer;
@@ -93,7 +97,6 @@ int main(int argc, char *argv[])
 
     } // fi
 
-
     /*
     TODO 5:
     std::vector< long > path = g.Dijkstra( start_id, end_id );
@@ -104,16 +107,18 @@ int main(int argc, char *argv[])
     << vertices[ path[ i ] ].Y << " "
     << vertices[ path[ i ] ].Z << std::endl;
   */
-    std::vector<Point> dk = grafo.dijkstra(grafo.buscarVerticePorPosicion((float)start_id), grafo.buscarVerticePorPosicion((float)end_id));
-    std::cout << dk.size() << std::endl;
+    std::vector<Point> dk = grafo.dijkstra((float)start_id, (float)end_id);
+    //std::vector<std::vector<float>> f = grafo.obtenerMatrix();
+    
+    //grafo.imprimirVertices();
+    //std::cout << "---------------------------------------" << std::endl;
     for (int i = 0; i < dk.size(); i++)
     {
         std::cout
             << dk[i].X << " "
             << dk[i].Y << " "
-            << dk[i].Z << std::endl;
+            << dk[i].Z << " | "<< grafo.buscarVerticePosicion(dk[i]) << std::endl;
+
     }
-
-
     return (0);
 }
